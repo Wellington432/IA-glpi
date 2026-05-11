@@ -1,0 +1,35 @@
+services:
+
+  postgres:
+    image: postgres:16
+
+    container_name: evolution-postgres
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: evolution
+
+    ports:
+      - "5432:5432"
+
+  evolution-api:
+    image: atendai/evolution-api
+
+    container_name: evolution-api
+
+    depends_on:
+      - postgres
+
+    ports:
+      - "8080:8080"
+
+    environment:
+
+      AUTHENTICATION_API_KEY: YARI123
+
+      DATABASE_PROVIDER: postgresql
+
+      DATABASE_CONNECTION_URI: postgresql://postgres:postgres@postgres:5432/evolution
+
+    restart: always
