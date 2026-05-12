@@ -1,0 +1,27 @@
+# ENV
+.env
+
+# Node
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
+
+# Database
+*.db
+
+# Sessions
+sessions/
+.auth/
+
+# Logs
+logs/
+*.log
+
+# VSCode
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
