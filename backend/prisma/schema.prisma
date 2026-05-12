@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id         Int       @id @default(autoincrement())
+  nome       String?
+  telefone   String?   @unique
+  setor      String?
+  criado_em  DateTime  @default(now())
+
+  chamados   Chamado[]
+}
+
+enum Status {
+  aberto
+  em_andamento
+  fechado
+}
+enum Prioridade {
+  baixa
+  media
+  alta
+}
+
+model Chamado {
+  id           Int       @id @default(autoincrement())
+  usuario_id   Int 
+  titulo       String
+  descricao    String
+  status       Status    @default(aberto)
+  prioridade   Prioridade    @default(media)
+  criado_em    DateTime  @default(now())
+
+  usuario Usuario @relation(fields: [usuario_id], references: [id])
+}
+
+model MensagemIA {
+  id         Int       @id @default(autoincrement())
+  telefone   String @unique
+  pergunta   String
+  resposta   String
+  criado_em  DateTime  @default(now())
+}
